@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Theme Park – Admin / Staff</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">THEME PARK<small>ADMIN / STAFF CONSOLE</small></div>
+  <nav id="nav" class="hidden">
+    <button data-tab="dash" class="active">Dashboard</button>
+    <button data-tab="rides">Rides &amp; Slots</button>
+    <button data-tab="log">Ride Log</button>
+    <button data-tab="bookings">Bookings</button>
+  </nav>
+  <div class="who"><span id="who"></span><button class="btn ghost small hidden" id="logoutBtn">Log out</button><a href="index.html">← Visitor site</a></div>
+</header>
+
+<main>
+  <section id="tab-auth" class="hidden">
+    <div class="card auth">
+      <h2>Staff login</h2>
+      <form id="loginForm">
+        <label>Email</label><input name="email" type="email" required autocomplete="username">
+        <label>Password</label><input name="password" type="password" required autocomplete="current-password">
+        <p><button class="btn" type="submit">Log in</button></p>
+        <p class="muted">Demo: admin@themepark.com / admin123<br>or operator@themepark.com / operator123</p>
+      </form>
+    </div>
+  </section>
+
+  <section id="tab-dash" class="hidden">
+    <h1>Dashboard</h1><p class="sub">Live figures from the database.</p>
+    <div class="grid" id="stats"></div>
+    <div class="grid" style="margin-top:16px">
+      <div class="card"><h2>Most popular rides</h2><div id="popular"></div></div>
+      <div class="card"><h2>Average rating per ride</h2><div id="ratings"></div></div>
+    </div>
+    <div class="card"><h2>Overbooked slots</h2><div id="overbooked"></div></div>
+  </section>
+
+  <section id="tab-rides" class="hidden">
+    <h1>Ride management</h1>
+    <p class="sub">Every status change and slot update is written to the Ride Log with your name.</p>
+    <div class="card"><div class="row" style="align-items:center"><h2 style="margin:0">Rides</h2>
+      <div style="text-align:right"><button class="btn small" id="newRideBtn">+ Add ride</button></div></div>
+      <div id="rideTable"></div></div>
+
+    <div class="card hidden" id="rideForm">
+      <h2 id="rideFormTitle">Add ride</h2>
+      <div class="row">
+        <div><label>Name</label><input id="rfName" maxlength="50"></div>
+        <div><label>Type</label><input id="rfType" maxlength="30" placeholder="Thrill / Family / Water"></div>
+        <div><label>Capacity (seats per slot)</label><input id="rfCap" type="number" min="0"></div>
+        <div><label>Price per seat (₹)</label><input id="rfPrice" type="number" min="0" step="0.01"></div>
+        <div><label>Location</label><select id="rfLoc"></select></div>
+      </div>
+      <p><button class="btn" id="rfSave">Save</button> <button class="btn ghost" id="rfCancel">Cancel</button></p>
+    </div>
+
+    <div class="card hidden" id="slotCard">
+      <h2 id="slotTitle">Slots</h2>
+      <div class="row" style="align-items:end">
+        <div><label>Date</label><input type="date" id="slDate"></div>
+        <div><label>Start</label><input type="time" id="slStart" value="10:00"></div>
+        <div><label>End</label><input type="time" id="slEnd" value="11:00"></div>
+        <div><label>Capacity (blank = ride capacity)</label><input type="number" id="slCap" min="1"></div>
+        <div><button class="btn" id="slAdd">Add slot</button></div>
+      </div>
+      <div id="slotTable"></div>
+    </div>
+  </section>
+
+  <section id="tab-log" class="hidden">
+    <h1>Ride log</h1><p class="sub">Timestamped record of every operational action, tied to the staff member.</p>
+    <div class="card">
+      <div class="row" style="align-items:end">
+        <div><label>Ride</label><select id="logRide"></select></div>
+        <div><label>Manual entry (e.g. INSPECTION)</label><input id="logOp" maxlength="50"></div>
+        <div><label>Details</label><input id="logDetails" maxlength="255"></div>
+        <div><button class="btn" id="logAdd">Add log entry</button></div>
+      </div>
+    </div>
+    <div class="card" id="logTable"></div>
+  </section>
+
+  <section id="tab-bookings" class="hidden">
+    <h1>Visitor bookings</h1><p class="sub">Bookings marked REVIEW belong to a ride that was closed or put in maintenance – cancel to refund.</p>
+    <div class="card" id="bookingTable"></div>
+  </section>
+</main>
+<div id="toast"></div>
+<script src="common.js"></script>
+<script src="admin.js?v=20261022-status-fix"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Theme Park – Visitor Portal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">THEME PARK<small>VISITOR PORTAL</small></div>
+  <nav id="nav">
+    <button data-tab="avail" class="active">Rides &amp; Availability</button>
+    <button data-tab="book">Book Tickets &amp; Rides</button>
+    <button data-tab="bookings">My Bookings</button>
+    <button data-tab="tickets">My Tickets</button>
+    <button data-tab="feedback">Feedback</button>
+  </nav>
+  <div class="who">
+    <span id="who"></span>
+    <button class="btn ghost small" id="logoutBtn">Log out</button>
+    <a href="admin.html">Staff login →</a>
+  </div>
+</header>
+
+<main>
+  <!-- AUTH -->
+  <section id="tab-auth" class="hidden">
+    <div class="card auth">
+      <div class="tabs">
+        <button class="btn small" id="showLogin">Log in</button>
+        <button class="btn ghost small" id="showRegister">Create account</button>
+      </div>
+      <form id="loginForm">
+        <h2>Visitor login</h2>
+        <label>Email</label><input name="email" type="email" required autocomplete="username">
+        <label>Password</label><input name="password" type="password" required autocomplete="current-password">
+        <p><button class="btn" type="submit">Log in</button></p>
+        <p class="muted">Demo: visitor@example.com / visitor123</p>
+      </form>
+      <form id="registerForm" class="hidden">
+        <h2>Create your account</h2>
+        <label>Full name</label><input name="name" maxlength="50" required>
+        <div class="row">
+          <div><label>Gender</label><select name="gender"><option value="">–</option><option>Male</option><option>Female</option><option>Other</option></select></div>
+          <div><label>Date of birth</label><input name="dob" type="date"></div>
+        </div>
+        <label>Phone</label><input name="phone" maxlength="15">
+        <label>Email</label><input name="email" type="email" required autocomplete="username">
+        <label>Password (min 6 characters)</label><input name="password" type="password" minlength="6" required autocomplete="new-password">
+        <p><button class="btn" type="submit">Register</button></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- AVAILABILITY -->
+  <section id="tab-avail">
+    <h1>Rides &amp; live availability</h1>
+    <p class="sub">Seats left = slot capacity minus confirmed bookings, read from the database each time.</p>
+    <div class="card"><div class="row"><div><label>Date</label><input type="date" id="availDate"></div></div></div>
+    <div id="availList"></div>
+  </section>
+
+  <!-- BOOKING WIZARD -->
+  <section id="tab-book" class="hidden">
+    <h1>Book tickets &amp; a ride</h1>
+    <p class="sub">Choose a ticket category and visit date, then optionally reserve a ride slot.</p>
+    <div class="card">
+      <div class="row">
+        <div><label>Ticket type / age category</label><select id="bkType"></select></div>
+        <div><label>Number of tickets (1–10)</label><input id="bkQty" type="number" min="1" max="10" value="1"></div>
+        <div><label>Visit date</label><input id="bkDate" type="date"></div>
+      </div>
+      <p><button class="btn" id="bkShow">Show rides for this date</button></p>
+    </div>
+    <div id="bkRides"></div>
+    <div class="card hidden" id="bkPay">
+      <h2>Payment &amp; confirmation</h2>
+      <div class="row">
+        <div><label>Payment method</label>
+          <select id="bkMode"><option value="CARD">Card</option><option value="UPI">UPI</option><option value="NETBANKING">Net banking</option><option value="CASH">Cash at gate</option></select></div>
+        <div><label>Demo option</label><label style="text-transform:none;letter-spacing:0;font-size:14px;color:var(--text)">
+          <input type="checkbox" id="bkFail" style="width:auto"> Simulate a payment failure</label></div>
+      </div>
+      <p id="bkSummary" style="font-size:17px"></p>
+      <button class="btn" id="bkConfirm">Confirm &amp; pay</button>
+    </div>
+    <div class="card hidden" id="bkDone"></div>
+  </section>
+
+  <!-- MY BOOKINGS -->
+  <section id="tab-bookings" class="hidden">
+    <h1>My bookings</h1><p class="sub">Cancelling returns the seat to the slot and records a refund transaction.</p>
+    <div class="card" id="myBookings"></div>
+    <h2>Purchase history</h2>
+    <div class="card" id="myPurchases"></div>
+  </section>
+
+  <!-- MY TICKETS -->
+  <section id="tab-tickets" class="hidden">
+    <h1>My tickets</h1><p class="sub">A ticket is valid up to and including its visit date.</p>
+    <div class="card" id="myTickets"></div>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section id="tab-feedback" class="hidden">
+    <h1>Feedback</h1>
+    <div class="card" style="max-width:520px">
+      <form id="fbForm">
+        <label>Ride (optional)</label><select name="rideId" id="fbRide"><option value="">General park feedback</option></select>
+        <label>Rating</label>
+        <select name="rating"><option value="5">5 – Excellent</option><option value="4">4 – Good</option><option value="3">3 – OK</option><option value="2">2 – Poor</option><option value="1">1 – Bad</option></select>
+        <label>Comments</label><textarea name="text" rows="4" maxlength="500"></textarea>
+        <p><button class="btn" type="submit">Submit feedback</button></p>
+      </form>
+    </div>
+  </section>
+</main>
+<div id="toast"></div>
+<script src="common.js"></script>
+<script src="visitor.js"></script>
+</body>
+</html>
